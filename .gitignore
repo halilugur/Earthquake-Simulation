@@ -24,6 +24,7 @@ DerivedData
 # Android/IntelliJ
 #
 build/
+yarn.lock
 .idea
 .gradle
 local.properties
