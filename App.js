@@ -28,8 +28,22 @@ class App extends Component {
         '(Uygulamayı kullanan kişi sayısı başarılı gönderim yapan kişi sayısından küçük olamaz.)'
       Alert.alert('Warning (Uyarı)', message)
     } else {
-      console.info(countOfAppUse)
-      console.info(countOfSendToCloud)
+      this.setState({
+        countOfAppUse: 0,
+        countOfSendToCloud: 0
+      })
+      fetch('https://ugurhalil.com/wp-json/earthquake/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          count_of_app_use: countOfAppUse,
+          count_of_send_to_cloud: countOfSendToCloud,
+          is_read_by_device: false
+        })
+      }).then(r => r.status === 200 ? Alert.alert("Success (Başarılı)", "Data sent.\nVeri gönderildi.") :
+        Alert.alert("Fail (Başarısız)", "Data could not be sent.\nVeri gönderilemedi."));
     }
   }
 
