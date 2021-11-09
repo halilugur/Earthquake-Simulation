@@ -17,7 +17,7 @@ class App extends Component {
     this.state = {
       countOfAppUse: 0,
       countOfSendToCloud: 0,
-      disable: false
+      disabled: false
     }
   }
 
@@ -29,66 +29,72 @@ class App extends Component {
         '(Uygulamayı kullanan kişi sayısı başarılı gönderim yapan kişi sayısından küçük olamaz.)'
       Alert.alert('Warning (Uyarı)', message)
     } else {
-      this.setState({
-        countOfAppUse: 0,
-        countOfSendToCloud: 0,
-        disable: true
-      })
-      fetch('https://ugurhalil.com/wp-json/earthquake/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          count_of_app_use: countOfAppUse,
-          count_of_send_to_cloud: countOfSendToCloud,
-          is_read_by_device: false
+      if (countOfAppUse === 0 || countOfSendToCloud === 0) {
+        Alert.alert('Warning (Uyarı)', 'Please fill required fields.\nLütfen gerekli alanları doldurun.')
+      } else {
+        this.setState({disabled: true})
+        fetch('https://ugurhalil.com/wp-json/earthquake/add', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            count_of_app_use: countOfAppUse,
+            count_of_send_to_cloud: countOfSendToCloud,
+            is_read_by_device: false
+          })
+        }).then(result => {
+          result.status === 200 ? Alert.alert('Success (Başarılı)', 'Data sent.\nVeri gönderildi.') :
+            Alert.alert('Fail (Başarısız)', 'Data could not be sent.\nVeri gönderilemedi.')
+          this.setState({
+            countOfAppUse: 0,
+            countOfSendToCloud: 0,
+            disabled: false
+          })
         })
-      }).then(result => {
-        result.status === 200 ? Alert.alert("Success (Başarılı)", "Data sent.\nVeri gönderildi.") :
-          Alert.alert("Fail (Başarısız)", "Data could not be sent.\nVeri gönderilemedi.")
-        this.setState({
-          disable: false
-        })
-      })
+      }
     }
   }
 
   render() {
     return (
-      <ScrollView>
-        <SafeAreaView style={styles.container}>
-          <Image style={styles.image} width={128} height={128} source={require('./assets/images/logo.png')} />
-
-          <TouchableOpacity style={styles.text_opacity}>
-            <Text style={styles.forgot_button}>Number of People Using the Application</Text>
-            <Text style={styles.small_info_text}>( Uygulamayı Kullanan Kişi Sayısı )</Text>
-          </TouchableOpacity>
-          <View style={styles.inputView}>
-            <TextInput
-              keyboardType={'number-pad'}
-              style={styles.TextInput}
-              onChangeText={value => this.setState({countOfAppUse: value})}
-            />
+      <SafeAreaView style={styles.container}>
+        <ScrollView>
+          <View style={styles.centeredView}>
+            <Image style={styles.image} source={require('./assets/images/logo.png')} />
           </View>
-
-          <TouchableOpacity style={styles.text_opacity}>
-            <Text style={styles.forgot_button}>Number of Persons Succeeding in Sending Data</Text>
-            <Text style={styles.small_info_text}>( Veriyi Göndermeyi Başaran Kişi Sayısı )</Text>
-          </TouchableOpacity>
-          <View style={styles.inputView}>
-            <TextInput
-              keyboardType={'number-pad'}
-              style={styles.TextInput}
-              onChangeText={value => this.setState({countOfSendToCloud: value})}
-            />
+          <View>
+            <View style={styles.centeredView}>
+              <Text style={styles.mainText}>Number of People Using the Application</Text>
+              <Text style={styles.infoText}>( Uygulamayı Kullanan Kişi Sayısı )</Text>
+            </View>
+            <View style={styles.centeredView}>
+              <TextInput
+                style={styles.textInput}
+                keyboardType={'number-pad'}
+                onChangeText={value => this.setState({countOfAppUse: value})}
+              />
+            </View>
           </View>
-
-          <TouchableOpacity style={this.state.disable ? styles.loginBtnDisable : styles.loginBtn} onPress={this.senTo} disabled={this.state.disabled}>
-            <Text style={styles.loginText}>SEND TO CLOUD</Text>
-          </TouchableOpacity>
-        </SafeAreaView>
-      </ScrollView>
+          <View>
+            <View style={styles.centeredView}>
+              <Text style={styles.mainText}>Number of Persons Succeeding in Sending Data</Text>
+              <Text style={styles.infoText}>( Veriyi Göndermeyi Başaran Kişi Sayısı )</Text>
+            </View>
+            <View style={styles.centeredView}>
+              <TextInput
+                style={styles.textInput}
+                keyboardType={'number-pad'}
+                onChangeText={value => this.setState({countOfSendToCloud: value})}
+              />
+            </View>
+          </View>
+          <View style={styles.centeredView}>
+            <TouchableOpacity style={this.state.disabled ? styles.sendButtonPassive : styles.sendButtonActive}
+                              onPress={this.senTo}>
+              <Text style={{fontSize: 28}}>SEND TO CLOUD</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     )
   }
 }
@@ -96,68 +102,55 @@ class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#B9DD39',
-    alignItems: 'center',
-    justifyContent: 'center'
+    backgroundColor: '#B9DD39'
   },
-
+  centeredView: {
+    alignItems: 'center',
+    marginTop: 15
+  },
   image: {
-    marginBottom: 40
+    marginTop: 20,
+    width: 256,
+    height: 256
   },
-
-  inputView: {
-    backgroundColor: 'rgb(255,255,255)',
-    borderRadius: 30,
+  mainText: {
+    fontSize: 26,
+    textAlign: 'center',
+    color: '#000000'
+  },
+  infoText: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: '#2d2d2d'
+  },
+  textInput: {
     width: '70%',
-    height: 45,
-    marginBottom: 20,
-    alignItems: 'center'
-  },
-
-  TextInput: {
-    height: 50,
-    flex: 1,
     padding: 10,
-    marginLeft: 20
-  },
-
-  forgot_button: {
+    backgroundColor: '#ffffff',
+    borderRadius: 30,
     color: '#000000',
-    height: 30
+    fontSize: 28,
+    textAlign: 'center'
   },
-
-  loginBtn: {
-    width: '80%',
-    borderRadius: 25,
+  sendButtonActive: {
+    marginTop: 30,
+    borderWidth: 2,
+    width: '60%',
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
-    backgroundColor: '#4BB9EC'
+    backgroundColor: '#4BB9EC',
+    borderRadius: 30
   },
-
-  loginBtnDisable: {
-    width: '80%',
-    borderRadius: 25,
+  sendButtonPassive: {
+    marginTop: 30,
+    borderWidth: 2,
+    width: '60%',
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
-    backgroundColor: '#555555'
-  },
-
-  loginText: {
-    color: '#ffffff'
-  },
-
-  small_info_text: {
-    fontSize: 10,
-    color: '#383838',
-    marginBottom: 5
-  },
-
-  text_opacity: {
-    alignItems: 'center'
+    backgroundColor: '#3f3f3f',
+    borderRadius: 30
   }
 })
 
