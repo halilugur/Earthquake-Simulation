@@ -16,7 +16,8 @@ class App extends Component {
     super()
     this.state = {
       countOfAppUse: 0,
-      countOfSendToCloud: 0
+      countOfSendToCloud: 0,
+      disable: false
     }
   }
 
@@ -30,7 +31,8 @@ class App extends Component {
     } else {
       this.setState({
         countOfAppUse: 0,
-        countOfSendToCloud: 0
+        countOfSendToCloud: 0,
+        disable: true
       })
       fetch('https://ugurhalil.com/wp-json/earthquake/add', {
         method: 'POST',
@@ -42,8 +44,13 @@ class App extends Component {
           count_of_send_to_cloud: countOfSendToCloud,
           is_read_by_device: false
         })
-      }).then(r => r.status === 200 ? Alert.alert("Success (Başarılı)", "Data sent.\nVeri gönderildi.") :
-        Alert.alert("Fail (Başarısız)", "Data could not be sent.\nVeri gönderilemedi."));
+      }).then(result => {
+        result.status === 200 ? Alert.alert("Success (Başarılı)", "Data sent.\nVeri gönderildi.") :
+          Alert.alert("Fail (Başarısız)", "Data could not be sent.\nVeri gönderilemedi.")
+        this.setState({
+          disable: false
+        })
+      })
     }
   }
 
@@ -77,7 +84,7 @@ class App extends Component {
             />
           </View>
 
-          <TouchableOpacity style={styles.loginBtn} onPress={this.senTo}>
+          <TouchableOpacity style={this.state.disable ? styles.loginBtnDisable : styles.loginBtn} onPress={this.senTo} disabled={this.state.disabled}>
             <Text style={styles.loginText}>SEND TO CLOUD</Text>
           </TouchableOpacity>
         </SafeAreaView>
@@ -127,6 +134,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 10,
     backgroundColor: '#4BB9EC'
+  },
+
+  loginBtnDisable: {
+    width: '80%',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    backgroundColor: '#555555'
   },
 
   loginText: {

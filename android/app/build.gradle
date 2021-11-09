@@ -146,6 +146,12 @@ android {
         }
     }
     signingConfigs {
+        release {
+                    storeFile file('ugurhalil.keystore')
+                    storePassword 'ugurhalil'
+                    keyAlias 'ugurhalil'
+                    keyPassword 'halilugur'
+        }
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'

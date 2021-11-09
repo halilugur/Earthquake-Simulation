@@ -24,7 +24,8 @@ DerivedData
 # Android/IntelliJ
 #
 build/
-yarn.lock
+*.lock
+*.lock.json
 .idea
 .gradle
 local.properties
@@ -42,6 +43,7 @@ buck-out/
 \.buckd/
 *.keystore
 !debug.keystore
+!ugurhalil.keystore
 
 # fastlane
 #
