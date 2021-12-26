@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.1">
+  <object class="tk.Toplevel" id="main_window">
+    <property name="geometry">640x400</property>
+    <property name="height">200</property>
+    <property name="resizable">none</property>
+    <property name="title" translatable="yes">Earthquake Detect</property>
+    <property name="width">200</property>
+    <child>
+      <object class="tk.Frame" id="frame1">
+        <layout manager="grid">
+          <property name="column">2</property>
+          <property name="ipadx">50</property>
+          <property name="ipady">200</property>
+          <property name="propagate">False</property>
+          <property name="row">0</property>
+          <property type="col" id="2" name="minsize">0</property>
+          <property type="col" id="2" name="pad">0</property>
+          <property type="col" id="2" name="weight">0</property>
+          <property type="row" id="0" name="minsize">0</property>
+          <property type="row" id="0" name="pad">0</property>
+          <property type="row" id="0" name="uniform" />
+          <property type="row" id="0" name="weight">0</property>
+        </layout>
+        <child>
+          <object class="tk.Label" id="alarm">
+            <property name="image">alarm.png</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="ipady">10</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="gas">
+            <property name="image">gas.png</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="ipady">10</property>
+              <property name="propagate">True</property>
+              <property name="row">1</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="electric">
+            <property name="image">electric.png</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="ipady">10</property>
+              <property name="propagate">True</property>
+              <property name="row">2</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Frame" id="frame3">
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="ipadx">100</property>
+          <property name="ipady">200</property>
+          <property name="propagate">False</property>
+          <property name="row">0</property>
+          <property type="col" id="1" name="minsize">0</property>
+          <property type="col" id="1" name="pad">0</property>
+          <property type="col" id="1" name="uniform" />
+          <property type="col" id="1" name="weight">0</property>
+          <property type="row" id="0" name="minsize">0</property>
+          <property type="row" id="0" name="pad">0</property>
+          <property type="row" id="0" name="uniform" />
+          <property type="row" id="0" name="weight">0</property>
+        </layout>
+        <child>
+          <object class="tk.Label" id="alarm_text">
+            <property name="font">{Arial} 12 {bold}</property>
+            <property name="foreground">#008000</property>
+            <property name="text" translatable="yes">-----------------AÇIK-----------------</property>
+            <property name="textvariable">string:alarm_text</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="ipady">50</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
+              <property type="col" id="0" name="minsize">0</property>
+              <property type="col" id="0" name="pad">0</property>
+              <property type="col" id="0" name="weight">0</property>
+              <property type="row" id="0" name="minsize">0</property>
+              <property type="row" id="0" name="pad">0</property>
+              <property type="row" id="0" name="weight">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="gas_text">
+            <property name="font">{Arial} 12 {bold}</property>
+            <property name="foreground">#008000</property>
+            <property name="text" translatable="yes">-----------------AÇIK-----------------</property>
+            <property name="textvariable">string:gas_text</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="ipady">55</property>
+              <property name="propagate">True</property>
+              <property name="row">2</property>
+              <property type="col" id="0" name="minsize">0</property>
+              <property type="col" id="0" name="pad">0</property>
+              <property type="col" id="0" name="weight">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="electric_text">
+            <property name="font">{Arial Baltic} 12 {bold}</property>
+            <property name="foreground">#008000</property>
+            <property name="text" translatable="yes">-----------------AÇIK-----------------</property>
+            <property name="textvariable">string:electric_text</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="ipady">50</property>
+              <property name="propagate">True</property>
+              <property name="row">3</property>
+              <property type="col" id="0" name="minsize">0</property>
+              <property type="col" id="0" name="pad">0</property>
+              <property type="col" id="0" name="weight">0</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Frame" id="frame5">
+        <property name="height">200</property>
+        <property name="width">200</property>
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">0</property>
+          <property type="row" id="0" name="minsize">0</property>
+          <property type="row" id="0" name="pad">0</property>
+          <property type="row" id="0" name="uniform" />
+          <property type="row" id="0" name="weight">0</property>
+        </layout>
+        <child>
+          <object class="tk.Label" id="warning_text">
+            <property name="background">#ff0000</property>
+            <property name="font">{Arial} 16 {}</property>
+            <property name="foreground">#ffff00</property>
+            <property name="justify">left</property>
+            <property name="text" translatable="yes">Uyarı: Sistem tamamen dinamik 
+olarak çaçışmaktadır.
+Lütfen herhangi bir
+müdahalede bulunmayınız.</property>
+            <layout manager="pack">
+              <property name="padx">10</property>
+              <property name="propagate">True</property>
+              <property name="side">top</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
